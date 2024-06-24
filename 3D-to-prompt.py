@@ -27,7 +27,7 @@ def model_to_prompt(model_path, clip_model_name, lowvram: bool):
     elif model_path[-4:] in ['usdz', '.usd']:
         bpy.ops.wm.usd_import(filepath=model_path)  # ALREADY HAS TEXTURES
     elif model_path[-3:] == 'x3d':
-        bpy.ops.import_scene.x3d(filepath=model_path)  # ALREADY HAS TEXTURES
+        bpy.ops.import_scene.x3d(filepath=model_path)  # MUST HAVE TEXTURES
     elif model_path[-4:] in ['gltf', '.glb']:
         bpy.ops.import_scene.gltf(filepath=model_path)  # ALREADY HAS TEXTURES
     elif model_path[-3:] in ['FBX', 'fbx']:
