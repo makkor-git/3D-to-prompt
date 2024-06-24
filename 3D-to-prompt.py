@@ -27,7 +27,7 @@ def model_to_prompt(model_path, clip_model_name, lowvram: bool):
     elif model_path[-4:] in ['usdz', '.usd']:
         bpy.ops.wm.usd_import(filepath=model_path)  # ALREADY HAS TEXTURES
     elif model_path[-3:] == 'x3d':
-        bpy.ops.import_scene.x3d(filepath=model_path)  # ALREADY HAS TEXTURES
+        bpy.ops.import_scene.x3d(filepath=model_path)  # MUST HAVE TEXTURES
     elif model_path[-4:] in ['gltf', '.glb']:
         bpy.ops.import_scene.gltf(filepath=model_path)  # ALREADY HAS TEXTURES
     elif model_path[-3:] in ['FBX', 'fbx']:
@@ -85,7 +85,7 @@ def model_to_prompt(model_path, clip_model_name, lowvram: bool):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--model_path", required=True, type=str, help="Path to a model"
+        "--model_path", type=str, help="Path to a model"
     )
     parser.add_argument(
         "--clip_model_name", default="ViT-L-14/openai", type=str, help="Name of a CLIP model to use"
@@ -95,7 +95,9 @@ def main():
     )
     args = parser.parse_args()
 
-    prompt = model_to_prompt(model_path=args.model_path,
+    model_path = os.path.abspath(args.model_path)
+
+    prompt = model_to_prompt(model_path=model_path,
                              clip_model_name=args.clip_model_name,
                              lowvram=args.lowvram)
     print(prompt)
